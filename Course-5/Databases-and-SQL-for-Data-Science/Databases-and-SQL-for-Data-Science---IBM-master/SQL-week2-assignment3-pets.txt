@@ -1,0 +1,101 @@
+-- Drop the PETSALE table in case it exists
+drop table PETSALE;
+
+
+-- Create the PETSALE table 
+create table PETSALE (
+	ID INTEGER PRIMARY KEY NOT NULL,
+	ANIMAL VARCHAR(20),
+	QUANTITY INTEGER,
+	SALEPRICE DECIMAL(6,2),
+	SALEDATE DATE
+	);
+	
+	
+-- Insert saple data into PETSALE table
+insert into PETSALE values 
+	(1,'Cat',9,450.09,'2018-05-29'),
+	(2,'Dog',3,666.66,'2018-06-01'),
+	(3,'Dog',1,100.00,'2018-06-04'),
+	(4,'Parrot',2,50.00,'2018-06-04'),
+	(5,'Dog',1,75.75,'2018-06-10'),
+	(6,'Hamster',6,60.60,'2018-06-11'),
+	(7,'Cat',1,44.44,'2018-06-11'),
+	(8,'Goldfish',24,48.48,'2018-06-14'),
+	(9,'Dog',2,222.22,'2018-06-15')
+;
+
+SELECT *
+FROM PETSALE 
+
+
+--Built-in Database Functions 
+--Aggregate Functions (sum, min, max, avg)
+--EXAMPLE 1
+SELECT SUM(SALEPRICE) 
+FROM PETSALE 
+
+--EXAMPLE 2
+SELECT SUM(SALEPRICE) AS SUM_OF_SALEPRICE
+FROM PETSALE
+
+--EXAMPLE 3A
+SELECT MAX(QUANTITY)
+FROM PETSALE 
+
+--EXAMPLE 3B (subset of data)
+SELECT MAX(QUANTITY)
+FROM PETSALE 
+WHERE ANIMAL = 'Dog'
+
+--EXAMPLE 4
+SELECT AVG(SALEPRICE)
+FROM PETSALE 
+
+--EXAMPLE 5: avg saleprice per dog 
+SELECT AVG(SALEPRICE /  QUANTITY)
+FROM PETSALE
+WHERE ANIMAL = 'Dog'
+
+--EXAMPLE 6
+SELECT ROUND(SALEPRICE)
+FROM PETSALE 
+
+--EXAMPLE 7: num of characters in string 
+SELECT LENGTH(ANIMAL)
+FROM PETSALE
+
+--EXAMPLE 8 
+SELECT UCASE(ANIMAL)
+FROM PETSALE
+
+--EXAMPLE 9: converts to lowercase to filter 
+SELECT *
+FROM PETSALE
+WHERE LCASE(ANIMAL) = 'cat'
+
+--EXAMPLE 10
+SELECT DISTINCT(UCASE(ANIMAL))
+FROM PETSALE
+
+--Date and Time Built-in Functions (date, time, timestamp)
+--FUNCTIONS: YEAR, DAY, DAYOFMONTH, DAYOFWEEK, DAYOFYEAR
+--WEEK, HOUR, MINUTE, SECOND
+--ECAMPLE 11: returns the day of the month 
+SELECT DAY(SALEDATE)
+FROM PETSALE
+WHERE  ANIMAL = 'Cat'
+
+--EXAMPLE 12: results for MAY
+SELECT COUNT(*)
+FROM PETSALE
+WHERE MONTH(SALEDATE) = '05'
+
+--EXAMPLE 13: returns date 3 days after saledate
+SELECT (SALEDATE + 3 DAYS)
+FROM PETSALE 
+
+--CURRENT_DATE, CURRENT_TIME
+--EXAMPLE 14: how many day have passed from saledate to today  (Y/MM/DD)
+SELECT (CURRENT_DATE - SALEDATE)
+FROM PETSALE
